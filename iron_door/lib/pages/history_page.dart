@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iron_door/pages/history_content.dart';
 import 'package:iron_door/utils/main_scaffold.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -9,11 +10,18 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  final List<String> items = [
+    'John Smith has entered the house',
+    "Door has been locked",
+    "Door has been unlocked",
+    "Someone tried to break in"
+    ];
+
   @override
   Widget build(BuildContext context) {
-    return const MainScaffold(
+    return MainScaffold(
         widget: Column(
-      children: [Text('History')],
+      children: [HistoryContent(items: items)],
     ));
   }
 }

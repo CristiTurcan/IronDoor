@@ -9,18 +9,19 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text(
-              'Drawer Header',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
+          // const DrawerHeader(
+          //   decoration: BoxDecoration(
+          //     color: Colors.blue,
+          //   ),
+          //   child: Text(
+          //     'Drawer Header',
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //       fontSize: 24,
+          //     ),
+          //   ),
+          // ),
+          const SizedBox(height: 30,),
           ListTile(
             leading: const Icon(Icons.message),
             title: const Text('Home'),
