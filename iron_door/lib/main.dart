@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iron_door/pages/history_page.dart';
+import 'package:iron_door/pages/notifications_page.dart';
 import 'package:iron_door/pages/home_page.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(),
       routes: {
         '/homepage':(context) => const MyHomePage(),
-        '/historypage':(context) => const HistoryPage()
+        '/notificationspage':(context) => const NotificationsPage()
       },
     );
   }

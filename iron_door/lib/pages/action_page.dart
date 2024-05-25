@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:iron_door/utils/doorbutton.dart';
+import 'package:iron_door/utils/unlock_function.dart';
 
 class MyActions extends StatefulWidget {
   const MyActions({super.key});
@@ -22,7 +21,7 @@ class _MyActionsState extends State<MyActions> {
             children: [
               DoorButton(
                 title: 'Unlock',
-                function: () => {log('Unlocked')},
+                function: () => unlock(),
               ),
             ],
           ),

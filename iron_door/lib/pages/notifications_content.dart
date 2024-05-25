@@ -5,14 +5,14 @@ import 'package:iron_door/backend/get_notification.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
 
-class HistoryContent extends StatefulWidget {
-  const HistoryContent({super.key});
+class NotificationsContent extends StatefulWidget {
+  const NotificationsContent({super.key});
 
   @override
-  State<HistoryContent> createState() => _HistoryContentState();
+  State<NotificationsContent> createState() => _NotificationsContentState();
 }
 
-class _HistoryContentState extends State<HistoryContent> {
+class _NotificationsContentState extends State<NotificationsContent> {
   late Future<List<MyNotification>> futureNotifications;
 
   @override

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:iron_door/pages/action_page.dart';
-import 'package:iron_door/pages/history_page.dart';
+import 'package:iron_door/pages/notifications_page.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 class MySideNavBar extends StatefulWidget {
@@ -13,7 +13,7 @@ class MySideNavBar extends StatefulWidget {
 }
 
 class _MySideNavBarState extends State<MySideNavBar> {
-  List pages = [const MyActions(), const HistoryPage()];
+  List pages = [const MyActions(), const NotificationsPage()];
   int selectedIndex = 0;
 
   void onTap(int index) {

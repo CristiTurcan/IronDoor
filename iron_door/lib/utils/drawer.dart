@@ -31,9 +31,9 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.account_circle),
-            title: const Text('History'),
+            title: const Text('Notifications'),
             onTap: () {
-              Navigator.pushNamed(context, '/historypage');
+              Navigator.pushNamed(context, '/notificationspage');
             },
           ),
         ],
