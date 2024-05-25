@@ -1,67 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:iron_door/utils/empty_iconbutton.dart';
-import 'package:iron_door/utils/my_notification.dart';
+import 'package:iron_door/backend/my_notification.dart';
+import 'package:iron_door/backend/get_notification.dart';
+import 'package:http/http.dart' as http;
+import 'dart:developer';
 
 class HistoryContent extends StatefulWidget {
-  final List<MyNotification> notifications;
-  const HistoryContent({super.key, required this.notifications});
+  const HistoryContent({super.key});
 
   @override
   State<HistoryContent> createState() => _HistoryContentState();
 }
 
 class _HistoryContentState extends State<HistoryContent> {
+  late Future<List<MyNotification>> futureNotifications;
+
+  @override
+  void initState() {
+    super.initState();
+    futureNotifications = fetchNotification(http.Client());
+
+    // printNotifications(futureNotifications);
+  }
+
+//   Future<void> printNotifications(futureNotifications) async {
+//   // futureNotifications = fetchNotification(http.Client());
+//   try {
+//     final notifications = await futureNotifications;
+//     log('Notifications: $notifications');
+//   } catch (e) {
+//     log('Error fetching notifications: $e');
+//   }
+// }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.separated(
-          itemCount: widget.notifications.length,
-          separatorBuilder: (context, index) {
-            return const Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-              height: 0.0,
+      child: FutureBuilder<List<MyNotification>>(
+        future: futureNotifications,
+        builder: (context, snapshot) {
+          if (snapshot.hasError && snapshot.error != null) {
+            final errorMessage = snapshot.error;
+
+            log('Error din snapshot: $errorMessage');
+            return const Center(
+              child: Text('An error has occurred!'),
             );
-          },
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const EmptyIconButton(),
-                  Expanded(
-                    child: Text(
-                      widget.notifications[index].message,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  if (widget.notifications[index].hasImage)
-                    IconButton(
-                      icon: const Icon(Icons.photo),
-                      onPressed: () => {
-                        showDialog(
-                            context: context,
-                            builder: ((context) {
-                              return AlertDialog(
-                                content:
-                                    Image.asset('assets/images/person.jpeg'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () => {
-                                            Navigator.of(context).pop(),
-                                          },
-                                      child: const Text('Close'))
-                                ],
-                              );
-                            }))
-                      },
-                    )
-                  else
-                    const EmptyIconButton()
-                ],
-              ),
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final notification = snapshot.data![index];
+                return ListTile(
+                  leading: const EmptyIconButton(),
+                  title: Text(notification.name, textAlign: TextAlign.center),
+                  subtitle:
+                      Text(notification.message, textAlign: TextAlign.center),
+                  trailing: notification.hasImage > 0
+                      ? IconButton(
+                          icon: const Icon(Icons.photo),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Image.network(notification
+                                      .image), // Assuming image URL is used
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : const EmptyIconButton(),
+                );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text('No notifications found.'),
+            );
+          }
+        },
+      ),
     );
   }
 }

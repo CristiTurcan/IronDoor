@@ -20,8 +20,6 @@ class _MyActionsState extends State<MyActions> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DoorButton(title: 'Lock', function: () => {log('Locked')}),
-              const SizedBox(width: 10),
               DoorButton(
                 title: 'Unlock',
                 function: () => {log('Unlocked')},
