@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-class DoorButton extends StatefulWidget {
+class MyButton extends StatefulWidget {
   final String title;
   final VoidCallback function;
 
-  const DoorButton({
+  const MyButton({
     super.key,
     required this.title,
     required this.function,
     });
 
   @override
-  State<DoorButton> createState() => _DoorButtonState();
+  State<MyButton> createState() => _MyButtonState();
 }
 
-class _DoorButtonState extends State<DoorButton> {
+class _MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 100,
       height: 50,
-      child: ElevatedButton(onPressed: widget.function, child: Text(widget.title)));
+      child: ElevatedButton(onPressed: widget.function, child: Text(widget.title, textAlign: TextAlign.center)));
   }
 }

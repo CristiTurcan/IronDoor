@@ -1,12 +1,11 @@
+import 'package:iron_door/backend/my_notification.dart';
+import 'package:iron_door/backend/url_file.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:iron_door/backend/my_notification.dart';
-
-const String ip = 'http://192.168.1.107:3000/notifications';
+const String url = '$baseURL/notifications';
 
 List<MyNotification> parseNotifications(String responseBody) {
   final parsed = jsonDecode(responseBody) as List<dynamic>;
@@ -18,7 +17,7 @@ List<MyNotification> parseNotifications(String responseBody) {
 Future<List<MyNotification>> fetchNotification(http.Client client) async {
   try {
     final response =
-        await client.get(Uri.parse(ip)).timeout(const Duration(seconds: 30));
+        await client.get(Uri.parse(url)).timeout(const Duration(seconds: 30));
 
     if (response.statusCode == 200) {
       return compute(parseNotifications, response.body);
